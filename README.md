@@ -5,4 +5,4 @@
 
 | Section      | Content                               |
 |--------------|---------------------------------------|
-| 1. 프로젝트 환경설정 | [프로젝트 생성]() |
+| 1. 프로젝트 환경설정 | [프로젝트 생성](https://github.com/MoonGyu1/jpashop/blob/main/notes/Sec1.%20%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%20%ED%99%98%EA%B2%BD%EC%84%A4%EC%A0%95.md) |
