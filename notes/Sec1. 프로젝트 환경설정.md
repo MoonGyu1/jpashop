@@ -41,6 +41,20 @@
   * H2: 인메모리 관계형 데이터베이스로 로컬, 테스트 환경에서 간편하게 사용
   * Lombok 어노테이션 기반으로 코드를 자동완성해주는 라이브러리, Getter, Setter, Equals, ToString 등
 
+## View 환경 설정
+* 스프링에서 Thymeleaf 권장
+  * 장점: 마크업 형태 유지, 브라우저에서 열림
+  * 단점(v2.0 이하): 태그 매칭 안되는 경우 에러 발생 → 3.0 이후 개선됨 (ex. \<BR\>)
+
+* HelloController
+  * org.springframework.ui.Model
+    * Model은 controller에서 생성된 데이터를 담아 view에 전달할 때 사용되는 객체
+    * return string은 관례상 화면 이름
+* 타임리프에서 viewName을 자동으로 매핑해줌
+  * templates/{viewNane}.html → 템플릿엔진으로 렌더링O
+  * static/{viewName}.html → 순수 html, 정적컨텐츠
+* 요즘은 SSR 보다 CSR 프레임워크 많이 쓰는 추세
+
 [ 참고자료 ]
 * [Maven과 Gradle의 개념 및 비교](https://velog.io/@leesomyoung/Maven%EA%B3%BC-Gradle%EC%9D%98-%EC%B0%A8%EC%9D%B4-%EB%B0%8F-%EB%B9%84%EA%B5%90)
 * [[build] ant, maven, gradle 차이점](https://blog.naver.com/rorean/222236619759)
