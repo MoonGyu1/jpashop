@@ -17,6 +17,7 @@ public class ItemRepository {
         if(item.getId() == null) { // 완전히 처음 등록하는 경우
             em.persist(item);
         } else {
+            // 상품 수정한 경우
             em.merge(item); // update와 유사
         }
     }
