@@ -20,6 +20,9 @@ public class ItemRepository {
             // 상품 수정한 경우
             em.merge(item); // update와 유사
         }
+
+        // item은 이후 영속성 컨텍스트에서 관리되지 않음
+        // 이후 사용하려면 em.merge() 후 반환된 객체를 써야함
     }
 
     public Item findOne(Long id) {

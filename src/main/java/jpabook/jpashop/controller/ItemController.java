@@ -67,6 +67,7 @@ public class ItemController {
     @PostMapping("items/{itemId}/edit")
     public String updateItem(@PathVariable("itemId") Long itemId, @ModelAttribute("form") BookForm form) {
 
+        // 준영속 엔티티 - 병합 방식
         Book book = new Book();
         book.setId(form.getId());
         book.setName(form.getName());
@@ -76,6 +77,10 @@ public class ItemController {
         book.setIsbn(form.getIsbn());
 
         itemService.saveItem(book);
+
+        // 준영속 엔티티 - 변경 감지 방식
+        itemService.updateItem(itemId, form.getName(), form.getPrice(), form.getStockQuantity());
+
         return "redirect:/items";
     }
 }
