@@ -2,13 +2,16 @@ package jpabook.jpashop.domain;
 
 import jakarta.persistence.*;
 import jpabook.jpashop.domain.item.Item;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import static jakarta.persistence.FetchType.LAZY;
 
 @Entity
 @Getter @Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED) // 파라미터 없는 생성자
 public class OrderItem {
 
     @Id @GeneratedValue
@@ -25,6 +28,12 @@ public class OrderItem {
 
     private int orderPrice; //주문 가격
     private int count; //주문 수량
+
+    // JPA는 기본생성자 protected까지 허용
+    // 아래 코드를 추가해서 생성 메서드 외의 방식으로 객체 생성하는 것 막을 수 있음
+    // @NoArgsConstructor(access = AccessLevel.PROTECTED)와 동일
+//    protected OrderItem() {
+//    }
 
     //==생성 메서드==//
     public static OrderItem createOrderItem(Item item, int orderPrice, int count) {
