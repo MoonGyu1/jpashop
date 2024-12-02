@@ -24,6 +24,8 @@ public class OrderService {
     private final MemberRepository memberRepository;
     private final ItemRepository itemRepository;
 
+    // 컨트롤러에서 엔티티가 아닌 id로 넘겨주는 방식이 의존성을 최대한 분리할 수 있음
+    // 리포지토리 접근할 때도 영속성 컨텍스트가 존재하는 상태에서 동작 가능
     /**
      * 주문
      */
