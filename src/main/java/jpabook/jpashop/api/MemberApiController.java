@@ -45,6 +45,32 @@ public class MemberApiController {
         return new CreateMemberResponse(id);
     }
 
+    @PutMapping("/api/v2/members/{id}")
+    public UpdateMemberResponse updateMemberV2(
+            @PathVariable("id") Long id,
+            @RequestBody @Valid UpdateMemberRequest request) {
+
+        memberService.update(id, request.getName());
+
+        // 커맨드와 쿼리 분리 -> PK 기반 가벼운 조회는 서비스에서 member 객체를 반환하기보다는 다시 조회하기
+        // 장점: 관심사 분리, 유지보수성 증가
+        Member findMember = memberService.findOne(id);
+        return new UpdateMemberResponse(findMember.getId(), findMember.getName());
+    }
+
+    @Data
+    static class UpdateMemberRequest {
+        @NotEmpty
+        private String name;
+    }
+
+    @Data
+    @AllArgsConstructor
+    static class UpdateMemberResponse {
+        private Long id;
+        private String name;
+    }
+
     @Data
     static class CreateMemberRequest {
         @NotEmpty

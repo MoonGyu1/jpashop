@@ -81,4 +81,12 @@ public class MemberService {
     public Member findOne(Long memberId) {
         return memberRepository.findOne(memberId);
     }
+
+    @Transactional
+    public void update(Long id, String name) {
+        Member member = memberRepository.findOne(id);
+        member.setName(name); // 영속성컨텍스트 내에 존재하므로 저장됨 (변경 감지 방식)
+
+        // member를 반환하는 경우, 커맨드와 쿼리가 동시에 존재함 -> 반환하지 말고 추가 쿼리하기
+    }
 }
