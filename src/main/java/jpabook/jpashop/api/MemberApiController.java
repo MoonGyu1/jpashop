@@ -10,6 +10,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 
 // RestController는 아래 두 개 어노테이션을 포함
 // ResponseBody는 데이터를 json, xml로 보낼 때 활용
@@ -20,6 +23,44 @@ import org.springframework.web.bind.annotation.*;
 public class MemberApiController {
 
     private final MemberService memberService;
+
+    // V1 - 문제
+    // 1. 엔티티를 직접 반환하므로 원하지 않는 정보까지 노출됨
+    //    (@JsonIgnore처럼 응답 스펙을 맞추기 위한 로직이 추가됨)
+    // 2. 프레젠테이션 계층과 엔티티가 분리가 안 됨
+    // 3. 엔티티가 바뀌면 API 스펙이 바뀜
+    // 4. 최상위 데이터타입이 array면 다른 필드 추가하거나 확장이 어려움
+    @GetMapping("/api/v1/members")
+    public List<Member> membersV1() {
+        return memberService.findMembers();
+    }
+
+    // V2
+    // DTO로 필요한 데이터만 노출
+    @GetMapping("/api/v2/members")
+    public Result membersV2() {
+        List<Member> findMembers = memberService.findMembers();
+        List<MemberDto> collect = findMembers.stream()
+                .map(m -> new MemberDto(m.getName()))
+                .toList();
+        return new Result(collect);
+//        return new Result(collect.size(), collect);
+    }
+
+    // Result 클래스로 컬렉션을 감싸서 배열이 아닌 객체를 반환하도록 함
+    // -> 추후 필요한 필드를 추가할 수 있음
+    @Data
+    @AllArgsConstructor
+    static class Result<T> {
+//        private int count;
+        private T data; // 컬렉션 데이터
+    }
+
+    @Data
+    @AllArgsConstructor
+    static class MemberDto {
+        private String name;
+    }
 
     // V1 - 문제
     // 1. presentation을 위한 검증로직이 엔티티에 들어감 (해당 부분은 변경 가능)

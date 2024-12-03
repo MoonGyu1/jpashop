@@ -7,7 +7,8 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create # 애플리케이션 실행 시점에 테이블 drop 후 재생성
+#      ddl-auto: create # 애플리케이션 실행 시점에 테이블 drop 후 재생성
+    ddl-auto: none # 애플리케이션 실행 시점에 테이블 drop 후 재생성
     properties:
       hibernate:
 #          show_sql: true # 표준 출력(System.out)
