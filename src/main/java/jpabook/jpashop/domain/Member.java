@@ -23,7 +23,7 @@ public class Member {
     @Embedded
     private Address address;
 
-//    @JsonIgnore // 반환 정보에서 빠짐, 하지만 다른 API에서는 필요로 한다면..?
+    @JsonIgnore // 양방향 연관관계인 경우 둘 중 하나는 JsonIgnore 처리해야 함
     @OneToMany(mappedBy = "member") // order 테이블의 member 필드에 의해 매핑됨
     private List<Order> orders = new ArrayList<>();
 }

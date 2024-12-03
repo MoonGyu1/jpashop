@@ -22,10 +22,14 @@ public class Order {
     @Column(name = "order_id")
     private Long id;
 
+    // 지연로딩이므로, Order 조회 시 DB에서 바로 가져오지 않음
+    // 대신 Member를 상속받은 프록시 객체를 넣어둠 (ByteBuddyInterceptor())
+    // 실제로 Member를 조회할 때, DB에 쿼리를 날림
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "member_id") // FK 이름
     private Member member;
 
+    // 1:N 관계는 기본이 lazy loading
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> orderItems = new ArrayList<>();
 
