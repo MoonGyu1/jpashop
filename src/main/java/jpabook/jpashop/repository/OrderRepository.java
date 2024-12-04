@@ -107,4 +107,21 @@ public class OrderRepository {
                     " join fetch o.delivery d", Order.class
         ).getResultList();
     }
+
+    // distinct 키워드가 없는 경우:
+    // order 2개 * 각각 orderItem 2개 = 총 데이터행 4개
+    // => 동일한 orderId를 가진 결과값이 두 번씩 나옴
+    public List<Order> findAllWithItem() {
+        return em.createQuery(
+                "select distinct o from Order o" + // 하이버네이트6부터는 자동 중복 제거
+                    " join fetch o.member m" +
+                    " join fetch o.delivery d" +
+                    " join fetch o.orderItems oi" +
+                    " join fetch oi.item i", Order.class)
+//                fetch join하는 경우 모든 데이터를 메모리에 올린 후 페이징 함 (SQL에 offset, limit 없음)
+//                사실상 페이징 불가
+//                .setFirstResult(1)
+//                .setMaxResults(100)
+                .getResultList();
+    }
 }
